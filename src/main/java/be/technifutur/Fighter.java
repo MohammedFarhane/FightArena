@@ -63,29 +63,39 @@ public class Fighter {
     public String displayFighter() {
         return """
                     FIGHTER INFORMATION
-                 -------------------------
+                 ----------------------------------
                   ID                %d
-                 -------------------------
+                 ----------------------------------
                   Name              %s
-                 -------------------------
+                 ----------------------------------
                   Age               %d
-                 -------------------------
+                 ----------------------------------
                   ELO               %d
-                 -------------------------
+                 ----------------------------------
                   Health            %d
-                """.formatted(id, name, age, elo, health);
+                 ----------------------------------
+                  Status            %s
+                """.formatted(id, name, age, elo, health, isDefeated() ? "Defeated" : "Still Standing");
     }
 
-    public void takeDamage(int amount) {
-        this.health -= amount;
+    public void takeDamage(int damage) {
+        this.health -= damage;
 
         if (health < 0) {
             this.health = 0;
         }
     }
 
-    public void attack(Fighter opponent) {
-        opponent.takeDamage(this.damage);
+    public boolean attack(Fighter opponent) {
+        if(!isDefeated() && !opponent.isDefeated()) {
+            opponent.takeDamage(this.damage);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isDefeated() {
+        return health == 0;
     }
 
 }

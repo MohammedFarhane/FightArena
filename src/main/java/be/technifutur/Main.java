@@ -5,16 +5,19 @@ public class Main {
         Fighter fighter = new Fighter(1, "Momo", 25, 1500);
         Fighter opponent = new Fighter(2, "Opponent", 20, 1000);
 
-        System.out.println(fighter.displayFighter());
-        System.out.println(opponent.displayFighter());
+        boolean attack;
 
-        fighter.attack(opponent);
-        fighter.attack(opponent);
+        do {
+            attack = fighter.attack(opponent);
+            System.out.println(attack ? "Attack successful!" : "Attack failed!");
+            if (attack) {
+                System.out.println(opponent.displayFighter());
+            }
+        } while (attack);
 
-        opponent.attack(fighter);
-
-        System.out.println("After the fight:");
-        System.out.println(fighter.displayFighter());
-        System.out.println(opponent.displayFighter());
+        if (opponent.isDefeated()) {
+            System.out.println(opponent.getName() + " has been defeated!");
+        }
     }
+
 }
